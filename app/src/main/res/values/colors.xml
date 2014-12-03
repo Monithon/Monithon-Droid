@@ -7,4 +7,7 @@
     <color name="accent">#9E9E9E</color>
     <color name="primary_text">#000000</color>
     <color name="window_background">#FAFAFA</color>
+    <color name="action_full">#03A9F4</color>
+    <color name="action_click">#4FC3F7</color>
+    <color name="action_ripple">#29B6F6</color>
 </resources>

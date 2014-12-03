@@ -1,4 +1,4 @@
-package org.monithon.monithon;
+package org.monithon.monithon.services;
 
 import android.app.Service;
 import android.content.Context;
