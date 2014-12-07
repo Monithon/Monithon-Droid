@@ -9,6 +9,9 @@ public class GlobalState extends Application {
 
     private String last_url = "http://monithon.org/";
 
+    private Float lon;
+    private Float lat;
+
     public String getLast_url() {
         return last_url;
     }
@@ -16,4 +19,6 @@ public class GlobalState extends Application {
     public void setLast_url(String last_url) {
         this.last_url = last_url;
     }
+
+
 }

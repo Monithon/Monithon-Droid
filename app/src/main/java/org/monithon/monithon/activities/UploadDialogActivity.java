@@ -1,23 +1,15 @@
 package org.monithon.monithon.activities;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -30,6 +22,8 @@ import com.kbeanie.imagechooser.api.ImageChooserManager;
 
 import org.json.JSONObject;
 import org.monithon.monithon.R;
+import org.monithon.monithon.services.UploadService;
+import org.monithon.monithon.util.GlobalState;
 
 import java.io.File;
 
@@ -73,13 +67,20 @@ public class UploadDialogActivity extends FragmentActivity implements ImageChoos
         }
     }
 
+
     @OnClick(R.id.do_save)
     public void do_save(){
         aq = new AQuery(this);
         aq.ajax("", JSONObject.class, new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject object, AjaxStatus status) {
-
+                GlobalState gs = (GlobalState)getApplication();
+                Intent i  = new Intent(that, UploadService.class);
+                 i.putExtra("url", gs.getLast_url()+"/upload");
+                i.putExtra("path", to_upload);
+                i.putExtra("lon", 1.4);
+                i.putExtra("lat",1.3);
+                startService(i);
                 that.finish();
             }
         });

@@ -1,17 +1,7 @@
 package org.monithon.monithon.activities;
 
-import org.monithon.monithon.R;
-import org.monithon.monithon.base.BaseActivity;
-import org.monithon.monithon.services.MonithonService;
-import org.monithon.monithon.util.GlobalState;
-
-
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.GeolocationPermissions;
 import android.webkit.WebChromeClient;
@@ -20,6 +10,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.melnykov.fab.FloatingActionButton;
+
+import org.monithon.monithon.R;
+import org.monithon.monithon.base.BaseActivity;
+import org.monithon.monithon.services.MonithonService;
+import org.monithon.monithon.util.GlobalState;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -50,11 +45,7 @@ public class ProjectListActivity extends BaseActivity {
         webview.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if(url.contains("projects/")){
-                    add_els.setVisibility(View.VISIBLE);
-                } else {
-                    add_els.setVisibility(View.GONE);
-                }
+               manageUrl(url);
                 state.setLast_url(url);
                 view.loadUrl(url);
                 return false;
@@ -70,6 +61,8 @@ public class ProjectListActivity extends BaseActivity {
             }
         });
         webview.loadUrl(state.getLast_url());
+        manageUrl(state.getLast_url());
+
 
         Intent ms = new Intent(this, MonithonService.class);
         startService(ms);
@@ -79,5 +72,18 @@ public class ProjectListActivity extends BaseActivity {
     public void add_elements() {
         Intent intent = new Intent (this, UploadDialogActivity.class);
         this.startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        webview.goBack();
+    }
+
+    private void manageUrl(String url){
+        if(url.contains("projects/")){
+            add_els.setVisibility(View.VISIBLE);
+        } else {
+            add_els.setVisibility(View.GONE);
+        }
     }
 }
